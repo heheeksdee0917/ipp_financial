@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #F8F7F4;
+  color: #0D1B2A;
+}
+
+@layer base {
+  .font-inter {
+    font-family: var(--font-inter), 'Inter', sans-serif;
+  }
+}
+
+@layer utilities {
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .animate-on-scroll.is-visible {
+    animation: fade-in 1.2s ease-out forwards;
+  }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

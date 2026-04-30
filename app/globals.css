@@ -37,3 +37,11 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+@keyframes mhAmbient {
+  from { filter: brightness(0.22) saturate(0.5) hue-rotate(0deg); }
+  to   { filter: brightness(0.28) saturate(0.65) hue-rotate(4deg); }
+}
+
+.mh-bg {
+  animation: mhAmbient 8s ease-in-out infinite alternate;
+}

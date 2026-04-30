@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ScrollAnimator } from '@/components/ScrollAnimator';
+import ShaderDemo_ATC from '@/components/ui/atc-shader';
 
 const services = [
   {
     num: '01',
     name: 'Wealth Protection',
-    desc: 'Safeguard your income, assets and family against life\u2019s uncertainties with tailored insurance and risk strategies.',
+    desc: 'Safeguard your income, assets and family against life\'s uncertainties with tailored insurance and risk strategies.',
     href: '/services/wealth-protection',
   },
   {
@@ -53,44 +54,84 @@ const features = [
   },
 ];
 
-export function HomePage() {
-  const [heroVisible, setHeroVisible] = useState(false);
+// Reusable fade-up element with configurable delay
+function FadeUp({
+  children,
+  delay = 0,
+  className = '',
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setHeroVisible(true), 100);
+    const t = setTimeout(() => setVisible(true), delay);
     return () => clearTimeout(t);
-  }, []);
+  }, [delay]);
 
   return (
+    <div
+      className={`transition-all duration-700 ease-out ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      } ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function HomePage() {
+  return (
     <>
-      {/* Section 1 — Hero */}
-      <section className="min-h-screen flex items-center justify-center bg-[#0D1B2A] pt-16">
-        <div
-          className={`text-center px-6 transition-all duration-1000 ease-out ${
-            heroVisible ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight">
-            YOUR WEALTH.
-            <br />
-            YOUR LEGACY.
-          </h1>
-          <p className="mt-6 text-lg md:text-xl text-[#9AA5B4] font-normal max-w-2xl mx-auto">
-            Comprehensive financial planning for professionals and high net worth
-            individuals in Malaysia.
-          </p>
-          <div className="mt-10">
-            <a
-              href="mailto:enquiry@ipp.com.my"
-              className="inline-block text-base font-semibold text-white bg-[#C41E3A] hover:bg-[#A01830] px-8 py-3 transition-colors"
-              style={{ borderRadius: '4px' }}
-            >
-              Speak to an Adviser &rarr;
-            </a>
-          </div>
-          <p className="mt-6 text-xs text-[#9AA5B4] tracking-wide">
-            Est. 1983 &middot; Licensed by SC Malaysia
-          </p>
+      {/* Section 1 — Hero with Shader Background */}
+      <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+
+        {/* Shader fills the entire hero background */}
+        <div className="absolute inset-0 z-0">
+          <ShaderDemo_ATC />
+        </div>
+
+        {/* Dark overlay so text remains legible */}
+        <div className="absolute inset-0 z-10 bg-[#0D1B2A]/60" />
+
+        {/* Hero content — each element fades up with staggered delay */}
+        <div className="relative z-20 text-center px-6">
+
+          <FadeUp delay={200}>
+            <p className="text-xs font-semibold text-[#C41E3A] uppercase tracking-[0.3em] mb-4">
+              Est. 1983 · Licensed by SC Malaysia
+            </p>
+          </FadeUp>
+
+          <FadeUp delay={400}>
+            <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight">
+              YOUR WEALTH.
+              <br />
+              YOUR LEGACY.
+            </h1>
+          </FadeUp>
+
+          <FadeUp delay={600}>
+            <p className="mt-6 text-lg md:text-xl text-[#9AA5B4] font-normal max-w-2xl mx-auto">
+              Comprehensive financial planning for professionals and high net worth
+              individuals in Malaysia.
+            </p>
+          </FadeUp>
+
+          <FadeUp delay={800}>
+            <div className="mt-10">
+              <a
+                href="mailto:enquiry@ipp.com.my"
+                className="inline-block text-base font-semibold text-white bg-[#C41E3A] hover:bg-[#A01830] px-8 py-3 transition-colors"
+                style={{ borderRadius: '4px' }}
+              >
+                Speak to an Adviser &rarr;
+              </a>
+            </div>
+          </FadeUp>
+
         </div>
       </section>
 

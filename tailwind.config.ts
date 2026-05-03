@@ -44,6 +44,18 @@ const config: Config = {
         'fade-in': 'fade-in 1.2s ease-out forwards',
         'fade-in-hero': 'fade-in-hero 1s ease-out forwards',
       },
+      keyframes: {
+        'timeline-flow': {
+          '0%':   { width: '0%',   opacity: '1' },
+          '70%':  { width: '100%', opacity: '1' },
+          '85%':  { width: '100%', opacity: '0' },
+          '86%':  { width: '0%',   opacity: '0' },
+          '100%': { width: '0%',   opacity: '1' },
+        },
+      },
+      animation: {
+        'timeline-flow': 'timeline-flow 3s ease-in-out infinite',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

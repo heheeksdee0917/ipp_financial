@@ -75,7 +75,6 @@ export default function AboutPage() {
                   className="bg-[#F8F7F4] border border-[#E2E8F0] p-16 flex items-center justify-center"
                   style={{ borderRadius: '4px', minWidth: '280px', minHeight: '200px' }}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/logo.png"
                     alt="IPP Logo"
@@ -88,17 +87,17 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Our History */}
-      <section className="py-24 px-6 bg-[#F8F7F4]">
+      {/* Our History — Animated S-Curve Timeline */}
+      <section className="py-24 px-6 bg-[#0D1B2A] overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <ScrollAnimator>
             <p className="text-sm font-semibold text-[#C41E3A] uppercase tracking-widest mb-4">
               Our History
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0D1B2A] mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
               Over 40 Years of Excellence
             </h2>
-            <p className="text-[#4A5568] leading-relaxed max-w-3xl mb-16">
+            <p className="text-[#9AA5B4] leading-relaxed max-w-3xl mb-16">
               The IPP Financial Planning Group in Malaysia is historically associated
               with the IPP Financial Services Holding group — Singapore's most complete
               licensed financial planning advisory organisation. IPP is simply committed
@@ -107,32 +106,100 @@ export default function AboutPage() {
             </p>
           </ScrollAnimator>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {milestones.map((m) => (
-              <ScrollAnimator key={m.year}>
-                <div
-                  className="bg-white border border-[#E2E8F0] p-8"
-                  style={{ borderRadius: '4px' }}
-                >
-                  <span className="text-3xl font-extrabold text-[#C41E3A]">
-                    {m.year}
-                  </span>
-                  <p className="mt-4 text-[#4A5568] leading-relaxed text-sm">
-                    {m.text}
-                  </p>
-                </div>
-              </ScrollAnimator>
-            ))}
+          {/* Timeline wrapper — SVG line + cards share the same stacking context */}
+          <div className="relative">
+
+            {/* Animated S-curve SVG */}
+            <svg
+              className="absolute pointer-events-none"
+              viewBox="0 0 1000 200"
+              preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{
+                zIndex: 10,
+                top: 0,
+                bottom: 0,
+                left: '-10vw',
+                right: '-10vw',
+                width: '120vw',
+                height: '100%',
+              }}
+            >
+              <defs>
+                <style>{`
+                  @keyframes s-flow {
+                    0%   { stroke-dashoffset: 1200; opacity: 0; }
+                    8%   { opacity: 1; }
+                    80%  { opacity: 1; }
+                    95%  { stroke-dashoffset: 0; opacity: 0; }
+                    100% { stroke-dashoffset: 1200; opacity: 0; }
+                  }
+                  .s-track {
+                    fill: none;
+                    stroke: rgba(255,255,255,0.05);
+                    stroke-width: 2;
+                  }
+                  .s-anim {
+                    fill: none;
+                    stroke: #C41E3A;
+                    stroke-width: 2.5;
+                    stroke-linecap: round;
+                    stroke-dasharray: 1200;
+                    stroke-dashoffset: 1200;
+                    animation: s-flow 3.4s ease-in-out infinite;
+                  }
+                `}</style>
+              </defs>
+
+              {/* Background track */}
+              <path
+                className="s-track"
+                d="M-50,100 C80,100 140,50 250,100 C360,150 390,175 500,100 C610,25 650,55 750,100 C850,145 900,120 1050,100"
+              />
+
+              {/* Animated flowing line */}
+              <path
+                className="s-anim"
+                d="M-50,100 C80,100 140,50 250,100 C360,150 390,175 500,100 C610,25 650,55 750,100 C850,145 900,120 1050,100"
+              />
+            </svg>
+
+            {/* Cards grid */}
+            <div className="relative grid grid-cols-1 md:grid-cols-4 gap-6" style={{ zIndex: 20 }}>
+              {milestones.map((m, i) => (
+                <ScrollAnimator key={m.year}>
+                  <div
+                    className="group relative flex flex-col p-6 rounded-xl overflow-hidden min-h-[200px]
+                      border border-white/10
+                      bg-white/5 backdrop-blur-md
+                      transition-all duration-500 ease-out
+                      hover:-translate-y-2
+                      hover:shadow-[0_24px_48px_rgba(0,0,0,0.4)]
+                      hover:border-white/20
+                      hover:bg-white/10"
+                  >
+                    <span className="text-2xl font-extrabold text-[#C41E3A] mb-3">
+                      {m.year}
+                    </span>
+                    <p className="text-sm text-[#9AA5B4] leading-relaxed">
+                      {m.text}
+                    </p>
+
+                    {/* Bottom accent line */}
+                    <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C41E3A] transition-all duration-500 group-hover:w-full rounded-b-xl" />
+                  </div>
+                </ScrollAnimator>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
 
       {/* Vision & Mission */}
-      <section className="bg-[#0D1B2A] py-24 px-6">
+      <section className="bg-[#0D1B2A] py-24 px-6 border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-
-            {/* Vision */}
             <ScrollAnimator>
               <div>
                 <p className="text-sm font-semibold text-[#C41E3A] uppercase tracking-widest mb-4">
@@ -149,7 +216,6 @@ export default function AboutPage() {
               </div>
             </ScrollAnimator>
 
-            {/* Mission */}
             <ScrollAnimator>
               <div>
                 <p className="text-sm font-semibold text-[#C41E3A] uppercase tracking-widest mb-4">
@@ -167,19 +233,18 @@ export default function AboutPage() {
                 </div>
               </div>
             </ScrollAnimator>
-
           </div>
         </div>
       </section>
 
       {/* Values */}
-      <section className="bg-white py-24 px-6">
+      <section className="bg-[#0D1B2A] py-24 px-6 border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <ScrollAnimator>
             <p className="text-sm font-semibold text-[#C41E3A] uppercase tracking-widest mb-4">
               Why IPP
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0D1B2A] mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-12">
               The Right Consultant. The Right Advice.
             </h2>
           </ScrollAnimator>
@@ -191,10 +256,10 @@ export default function AboutPage() {
             ].map((v) => (
               <ScrollAnimator key={v.title}>
                 <div className="border-l-2 border-[#C41E3A] pl-6">
-                  <h3 className="text-xl font-semibold text-[#0D1B2A] mb-3">
+                  <h3 className="text-xl font-semibold text-white mb-3">
                     {v.title}
                   </h3>
-                  <p className="text-[#4A5568] leading-relaxed">{v.body}</p>
+                  <p className="text-[#9AA5B4] leading-relaxed">{v.body}</p>
                 </div>
               </ScrollAnimator>
             ))}
@@ -203,7 +268,7 @@ export default function AboutPage() {
       </section>
 
       {/* Disclaimer */}
-      <section className="bg-[#F8F7F4] py-16 px-6 border-t border-[#E2E8F0]">
+      <section className="bg-[#0D1B2A] py-16 px-6 border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <ScrollAnimator>
             <p className="text-sm font-semibold text-[#C41E3A] uppercase tracking-widest mb-4">
@@ -217,10 +282,7 @@ export default function AboutPage() {
               Investments can go up and down and past performance is not an indication
               of future performance. For more information, complaints, and general
               enquiries please{' '}
-              <a
-                href="mailto:enquiry@ipp.com.my"
-                className="text-[#C41E3A] hover:underline"
-              >
+              <a href="mailto:enquiry@ipp.com.my" className="text-[#C41E3A] hover:underline">
                 contact us
               </a>
               .
@@ -230,20 +292,22 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#C41E3A] py-16 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-white">
-            Ready to start your financial journey?
-          </h2>
-          <a
-            href="mailto:enquiry@ipp.com.my"
-            className="inline-block text-base font-semibold text-white border-2 border-white hover:bg-white hover:text-[#C41E3A] px-8 py-3 transition-colors"
-            style={{ borderRadius: '4px' }}
-          >
-            Speak to an Adviser →
-          </a>
-        </div>
-      </section>
+      <ScrollAnimator>
+        <section className="relative bg-[#0D1B2A] py-16 px-6 border-t border-white/5 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#C41E3A]/10 to-transparent" />
+          <div className="relative max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-white">
+              Ready to start your financial journey?
+            </h2>
+            <a
+              href="mailto:enquiry@ipp.com.my"
+              className="inline-block text-base font-semibold text-white bg-[#C41E3A] hover:bg-[#A01830] px-8 py-3 transition-colors rounded"
+            >
+              Speak to an Adviser →
+            </a>
+          </div>
+        </section>
+      </ScrollAnimator>
 
     </main>
   );

@@ -11,24 +11,61 @@ const services = [
     name: 'Wealth Protection',
     desc: 'Safeguard your income, assets and family against life\'s uncertainties with tailored insurance and risk strategies.',
     href: '/services/wealth-protection',
+    icon: (
+      // Shield with check — protection
+      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+        <path d="M32 4 L56 14 L56 32 C56 46 44 58 32 62 C20 58 8 46 8 32 L8 14 Z" />
+        <polyline points="22,32 29,39 42,26" />
+      </svg>
+    ),
   },
   {
     num: '02',
     name: 'Wealth Accumulation',
     desc: 'Build your wealth through disciplined investment strategies designed for long-term growth and compounding returns.',
     href: '/services/wealth-accumulation',
+    icon: (
+      // Growing bar chart — accumulation
+      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+        <line x1="8" y1="56" x2="56" y2="56" />
+        <rect x="10" y="36" width="10" height="20" />
+        <rect x="27" y="24" width="10" height="32" />
+        <rect x="44" y="10" width="10" height="46" />
+        <polyline points="10,40 27,28 44,14" />
+      </svg>
+    ),
   },
   {
     num: '03',
     name: 'Wealth Management',
     desc: 'Optimize and manage your portfolio with institutional-grade asset allocation and ongoing advisory oversight.',
     href: '/services/wealth-management',
+    icon: (
+      // Pie chart with orbit ring — portfolio management
+      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+        <circle cx="32" cy="32" r="22" />
+        <path d="M32 10 L32 32 L50 42" />
+        <path d="M32 32 L14 22" />
+        <circle cx="32" cy="32" r="3" />
+      </svg>
+    ),
   },
   {
     num: '04',
     name: 'Wealth Distribution',
     desc: 'Ensure your legacy is transferred efficiently and according to your wishes through estate and trust planning.',
     href: '/services/wealth-distribution',
+    icon: (
+      // Tree branching down — estate/legacy distribution
+      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+        <circle cx="32" cy="10" r="6" />
+        <line x1="32" y1="16" x2="32" y2="30" />
+        <line x1="32" y1="30" x2="16" y2="42" />
+        <line x1="32" y1="30" x2="48" y2="42" />
+        <circle cx="16" cy="48" r="6" />
+        <circle cx="48" cy="48" r="6" />
+      </svg>
+    ),
   },
 ];
 
@@ -73,9 +110,8 @@ function FadeUp({
 
   return (
     <div
-      className={`transition-all duration-700 ease-out ${
-        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-      } ${className}`}
+      className={`transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+        } ${className}`}
     >
       {children}
     </div>
@@ -143,13 +179,11 @@ export function HomePage() {
               {trustItems.map((item, i) => (
                 <div
                   key={item.stat}
-                  className={`flex flex-col items-center text-center px-6 py-4 ${
-                    i < trustItems.length - 1
+                  className={`flex flex-col items-center text-center px-6 py-4 ${i < trustItems.length - 1
                       ? 'md:border-r md:border-[#E2E8F0]'
                       : ''
-                  } ${i < 1 ? '' : 'border-t md:border-t-0 border-[#E2E8F0]'} ${
-                    i === 1 ? 'md:border-r md:border-[#E2E8F0]' : ''
-                  }`}
+                    } ${i < 1 ? '' : 'border-t md:border-t-0 border-[#E2E8F0]'} ${i === 1 ? 'md:border-r md:border-[#E2E8F0]' : ''
+                    }`}
                 >
                   <span className="text-2xl md:text-3xl font-bold text-[#0D1B2A]">
                     {item.stat}
@@ -165,37 +199,62 @@ export function HomePage() {
       </ScrollAnimator>
 
       {/* Section 3 — Services */}
-      <section id="services" className="bg-[#F8F7F4] py-24 md:py-32">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="services" className="relative bg-[#0D1B2A] py-24 md:py-32 overflow-hidden">
+
+        {/* Subtle background texture */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0D1B2A] via-[#1a2d42] to-[#0D1B2A]" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#C41E3A]/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#C41E3A]/5 rounded-full blur-3xl" />
+
+        <div className="relative max-w-7xl mx-auto px-6">
           <ScrollAnimator>
             <p className="text-sm font-semibold text-[#C41E3A] uppercase tracking-widest">
               Our Services
             </p>
-            <h2 className="mt-3 text-3xl md:text-4xl font-bold text-[#0D1B2A]">
+            <h2 className="mt-3 text-3xl md:text-4xl font-bold text-white">
               Four Pillars of Financial Success
             </h2>
           </ScrollAnimator>
-
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-4 gap-6">
             {services.map((svc) => (
               <ScrollAnimator key={svc.num}>
                 <Link
                   href={svc.href}
-                  className="block bg-white border border-[#E2E8F0] p-8 transition-colors hover:border-[#C41E3A] group"
-                  style={{ borderRadius: '4px' }}
+                  className="group relative flex flex-col p-6 rounded-xl overflow-hidden min-h-[280px]
+          border border-white/10
+          bg-white/5 backdrop-blur-md
+          transition-all duration-500 ease-out
+          hover:-translate-y-2
+          hover:shadow-[0_24px_48px_rgba(0,0,0,0.4)]
+          hover:border-white/20
+          hover:bg-white/10"
                 >
-                  <span className="text-3xl font-bold text-[#C41E3A]">
-                    {svc.num}
-                  </span>
-                  <h3 className="mt-4 text-xl font-semibold text-[#0D1B2A]">
+                  {/* SVG watermark icon */}
+                  <div className="absolute -top-4 -right-4 w-36 h-36 text-white/5 group-hover:text-[#C41E3A]/10 transition-all duration-500">
+                    {svc.icon}
+                  </div>
+
+                  {/* Title in red */}
+                  <h3 className="relative mt-2 text-lg font-bold text-[#C41E3A] leading-snug">
                     {svc.name}
                   </h3>
-                  <p className="mt-2 text-[#4A5568] leading-relaxed">
+
+                  <p className="relative mt-3 text-sm text-[#9AA5B4] leading-relaxed">
                     {svc.desc}
                   </p>
-                  <span className="mt-4 inline-block text-sm font-semibold text-[#C41E3A] group-hover:underline">
-                    Learn More &rarr;
-                  </span>
+
+                  {/* Learn more pinned to bottom */}
+                  <div className="relative mt-auto pt-6 flex items-center gap-2 text-sm font-semibold text-white">
+                    <span className="transition-all duration-300 group-hover:mr-1">
+                      Learn More
+                    </span>
+                    <span className="inline-block transition-all duration-300 -translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100">
+                      →
+                    </span>
+                  </div>
+
+                  {/* Bottom accent line */}
+                  <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#C41E3A] transition-all duration-500 group-hover:w-full" />
                 </Link>
               </ScrollAnimator>
             ))}

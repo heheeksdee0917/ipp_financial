@@ -39,12 +39,6 @@ const config: Config = {
           from: { opacity: '0' },
           to: { opacity: '1' },
         },
-      },
-      animation: {
-        'fade-in': 'fade-in 1.2s ease-out forwards',
-        'fade-in-hero': 'fade-in-hero 1s ease-out forwards',
-      },
-      keyframes: {
         'timeline-flow': {
           '0%':   { width: '0%',   opacity: '1' },
           '70%':  { width: '100%', opacity: '1' },
@@ -54,10 +48,13 @@ const config: Config = {
         },
       },
       animation: {
+        'fade-in': 'fade-in 1.2s ease-out forwards',
+        'fade-in-hero': 'fade-in-hero 1s ease-out forwards',
         'timeline-flow': 'timeline-flow 3s ease-in-out infinite',
       },
     },
   },
   plugins: [require('tailwindcss-animate')],
 };
+
 export default config;
